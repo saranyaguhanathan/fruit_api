@@ -1,4 +1,5 @@
 require('dotenv').config()
+const cors = require('cors')
 const express =require('express')
 const app = express()
 const port = process.env.PORT
@@ -7,6 +8,7 @@ const logger = require("./logger")
 // Our routes go here
 
 // Middleware goes first
+app.use(cors())
 app.use(express.json())
 app.use(logger)
 
@@ -23,7 +25,6 @@ app.get("/fruits/:name",(req,res)=>{
 
   const name = req.params.name.toLowerCase()
   const ff = fruits.filter((f) => f.name.toLowerCase() == name )
-
 
   ff.length === 0 
   ? res.status(404).send("The fruit doesn't exist")
